@@ -2,6 +2,7 @@ const nt = require('express').Router();
 const { readFromFile, readAndAppend } = require('../../helpers/fsUtils');
 const uuid = require('../../helpers/uuid');
 const noteData = require('../../db/notes.json');
+const { json } = require('express');
 
 //GET route for retrieving all notes 
 nt.get('/', (req, res) => {
@@ -9,8 +10,7 @@ nt.get('/', (req, res) => {
 
   readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)));
 });
-
-//GET route for retrieving all notes 
+//GET route for deleting notes 
 nt.delete('/:id', (req, res) => {
   console.log('delete route called ')
   // loop through notes.json and find a note with id that is equal to req.params.id
@@ -18,9 +18,8 @@ nt.delete('/:id', (req, res) => {
   //Iterate through the notes to find what id matches the `req.params.term`
   for (let i = 0; i < noteData.length; i++) {
     if (requestedId === noteData[i].id.toLocaleLowerCase()) {
-      return res.json(noteData[i]);
-    }
-  }
+      let removedNoteList = noteData[i].splice(requestedId);
+  } return removedNoteList;
 
   // readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)[req.params.ind]));
 });
