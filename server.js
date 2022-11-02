@@ -1,20 +1,24 @@
 const express = require('express');
 const path = require('path');
-// const colors = require('colors');
-// const dbData = require('./db/db.json');
-
+const notes = require('./db/notes.json')
 //fs module
 const fs = require('fs');
 //creating a new express app
 const app = express();
 const PORT = 3001; 
 
+app.use(express.urlencoded({ extended: true}));
 //middleware sends statis resourese that are in public folder
 app.use(express.static('public'));
 
 app.get('/notes', (req, res) => 
  res.sendFile(path.join(__dirname, 'public/notes.html'))
 );
+
+//GET api request for notes 
+app.get('/api/notes', (req, res) => {
+  res.status(200).json(notes);
+});
 
 //POST request 
 app.use('api/notes', (req, res) => {
