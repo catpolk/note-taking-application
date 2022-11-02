@@ -1,5 +1,5 @@
 const nt = require('express').Router();
-const { readFromFile, readAndAppend } = require('../../helpers/fsUtils');
+const { readFromFile, readAndAppend, writeToFile } = require('../../helpers/fsUtils');
 const uuid = require('../../helpers/uuid');
 const noteData = require('../../db/notes.json');
 const { json } = require('express');
@@ -18,10 +18,17 @@ nt.delete('/:id', (req, res) => {
   //Iterate through the notes to find what id matches the `req.params.term`
   for (let i = 0; i < noteData.length; i++) {
     if (requestedId === noteData[i].id.toLocaleLowerCase()) {
-      let removedNoteList = noteData[i].splice(requestedId);
-  } return removedNoteList;
+      noteData.splice(i, 1);
+    } 
+  } 
+  writeToFile('./db/notes.json', noteData);
+  
+  const response ={ 
+    status: 'note deleted',
+  };
 
-  // readFromFile('./db/notes.json').then((data) => res.json(JSON.parse(data)[req.params.ind]));
+  res.json(response);
+
 });
 
 //POST route for submitting feedback 
