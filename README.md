@@ -12,5 +12,5 @@
 ![screenshot of the note-taking-application landing page](./public/images/screenshot-1.png)
 ![screenshot of the note-taking-application notes page](./public/images/screenshot-2.png)
 
-Github link: 
-URL: 
+Github link: https://github.com/catpolk/note-taking-application
+URL: https://catpolk.github.io/note-taking-application/
